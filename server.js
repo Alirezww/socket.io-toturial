@@ -13,12 +13,20 @@ const io = socketIO(server, {
     } 
 });
 
-io.on("connection", (socket) => {
-    socket.on("welcome-server", (data) => {
+io.of("/teacher").on("connection", (socket) => {
+    socket.on("teacher-server", (data) => {
         console.log(data)
     });
 
-    socket.emit("welcom-client", "hello client!!! i am a backend developer")
+    socket.emit("teacher-client", "message from teacher in server.")
+});
+
+io.of("/student").on("connection", (socket) => {
+    socket.emit("student-client", "message from student in server");
+
+    socket.on("student-server", (data) => {
+        console.log(data);
+    })
 })
 
 server.listen(3000, () => { console.log("The server is running on port 3000") })
