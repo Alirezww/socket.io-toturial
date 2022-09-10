@@ -13,20 +13,10 @@ const io = socketIO(server, {
     } 
 });
 
-io.of("/teacher").on("connection", (socket) => {
-    socket.on("teacher-server", (data) => {
-        console.log(data)
-    });
-
-    socket.emit("teacher-client", "message from teacher in server.")
-});
-
-io.of("/student").on("connection", (socket) => {
-    socket.emit("student-client", "message from student in server");
-
-    socket.on("student-server", (data) => {
-        console.log(data);
-    })
+io.on("connection", (socket) => {
+    console.log("connected to server");
+    console.log(socket.handshake.query)
+    console.log(socket.handshake.headers['authorization'])
 })
 
 server.listen(3000, () => { console.log("The server is running on port 3000") })
