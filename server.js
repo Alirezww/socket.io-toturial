@@ -14,9 +14,9 @@ const io = socketIO(server, {
 });
 
 io.on("connection", (socket) => {
-    console.log("connected to server");
-    console.log(socket.handshake.query)
-    console.log(socket.handshake.headers['authorization'])
+    socket.on("clientMessage", (data) => {
+        socket.emit("serverMessage", data);
+    })
 })
 
 server.listen(3000, () => { console.log("The server is running on port 3000") })
